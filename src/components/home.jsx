@@ -1,6 +1,6 @@
 function Home(){
     return (
-        <>placeholder text</>
+        <>placeholder text for home</>
     )
 }
 
