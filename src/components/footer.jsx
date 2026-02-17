@@ -1,7 +1,7 @@
 function Footer(){
     return (
         <footer>
-            this is the footer
+            footer contents go here
         </footer>
     )
 }
