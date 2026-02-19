@@ -13,4 +13,4 @@ async function fetchData(url){
 }
 
 
-export const getItems =  () => fetchData('https://fakestoreapi.com/products');
+export const getItems =  () => fetchData('https://dummyjson.com/products');
