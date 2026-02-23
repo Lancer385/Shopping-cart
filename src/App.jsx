@@ -15,6 +15,7 @@ function App() {
             const products = await getItems();
             if (isMounted){
                 setItems(products.products)
+
             };
         };
         loadProducts()
@@ -36,3 +37,5 @@ function App() {
 }
 
 export default App
+
+

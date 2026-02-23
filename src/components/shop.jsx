@@ -21,7 +21,6 @@ function Shop(){
                 <Item 
                     value = {value}
                     key={value.id}
-                    id={value.id}
                     initCount={0}
                     handleCartChanges= {handleCartChanges}
                     cartItems= {cartItems}

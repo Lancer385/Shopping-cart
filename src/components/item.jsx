@@ -1,8 +1,8 @@
 import { useState } from "react";
 import styles from "../styles/item.module.css"
-function Item({value, id, initCount, handleCartChanges, cartItems, isCartItem}){
-
-    const [count, setCount] = useState(initCount)
+function Item({value, initCount, handleCartChanges, cartItems, isCartItem }){
+    const [count, setCount] = useState(initCount);
+    const { title, price, images, stock, id } = value;
 
     function handleInputChange(e) {
         // edge case to prevent typing 0000000, it's not really problematic but it's nice to have.
@@ -15,36 +15,44 @@ function Item({value, id, initCount, handleCartChanges, cartItems, isCartItem}){
             return;
         }
         let input = parseInt(e.target.value)
-        if (input <= value.stock){
+        if (input <= stock){
             setCount(input)
             return;
         }
         else {
-            setCount(value.stock);
+            setCount(stock);
             return;
         }
     }
     function addToCart(){
-         handleCartChanges([id, count], value.stock)
+         handleCartChanges([id, count], stock)
     }
     function removeFromCart(){
         handleCartChanges(id);
     }
+    function increment(){
+        setCount(count + 1);
+    }
+    function decrement(){
+        setCount(count - 1)
+    }
 
         return (
             <div className={"item " + (id)}>
-                <h2>{value.title}</h2>
-                <p>${value.price}</p>
-                <img src={value.images[0]} width='250px' height='250px'/>
+                <h2>{title}</h2>
+                <p>${price}</p>
+                <img src={images[0]} width='250px' height='250px'/>
+                <button className="controlInput" onClick={decrement} disabled={count === 0}>-</button>
                 <input type="number"
                        min='0' 
-                       max={value.stock} 
+                       max={stock} 
                        value={count} 
-                       onChange={handleInputChange} 
+                       onChange={handleInputChange}
                        className={styles.capacity}/>
+                <button className="controlInput" onClick={increment} disabled={count === stock}>+</button>
                 {isCartItem ? 
                     <button className="removeFromCart" onClick={removeFromCart}>Remove</button> :
-                    <button className="addToCart" onClick={addToCart} disabled={count <= 0 || value.stock === cartItems[id]?.count}>Add to Cart</button>
+                    <button className="addToCart" onClick={addToCart} disabled={count <= 0 || stock === cartItems[id]?.count}>Add to Cart</button>
                 }
             </div>
         )

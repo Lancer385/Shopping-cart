@@ -16,10 +16,9 @@ function Cart(){
         <>
             {Object.keys(cartItems).map((key) => (
                 <Item 
-                    value = {items[key - 1]} // the id starts from 1 but the api structure starts from 0 so we just subtract 1
+                    value = {items[key - 1]} // the cart object starts from 1 based on the id but the api structure starts from 0 so we just subtract 1
                     key={key}
                     initCount={cartItems[key].count}
-                    id={key} // we give the id the key here since the cart structure starts from 1
                     handleCartChanges= {handleCartChanges}
                     cartItems={cartItems}
                     isCartItem={true}
