@@ -21,7 +21,11 @@ function Shop(){
                 <Item 
                     value = {value}
                     key={value.id}
+                    id={value.id}
+                    initCount={0}
                     handleCartChanges= {handleCartChanges}
+                    cartItems= {cartItems}
+                    isCartItem={false}
                 />
             ))}
         </> || /* otherwise, show loading state if they are taking too long (items = null) */

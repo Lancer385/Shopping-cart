@@ -1,13 +1,13 @@
 import { useState } from "react";
 import styles from "../styles/item.module.css"
-function Item({value, handleCartChanges}){
+function Item({value, id, initCount, handleCartChanges, cartItems, isCartItem}){
 
-    const [count, setCount] = useState(0)
+    const [count, setCount] = useState(initCount)
 
     function handleInputChange(e) {
-        // edge case to prevent typing 0000000
+        // edge case to prevent typing 0000000, it's not really problematic but it's nice to have.
         if (e.target.value.length === 2 && e.target.value.startsWith("0")){
-            setCount(1);
+            setCount(1); // since react won't trigger re-render since parsed zeros is just 0. we just set it to 1.
             return;
         }
         if (e.target.value === ''){
@@ -15,7 +15,6 @@ function Item({value, handleCartChanges}){
             return;
         }
         let input = parseInt(e.target.value)
-       
         if (input <= value.stock){
             setCount(input)
             return;
@@ -26,19 +25,30 @@ function Item({value, handleCartChanges}){
         }
     }
     function addToCart(){
-        if (count > 0){
-            handleCartChanges([value.id,count], value.stock)
-        }
+         handleCartChanges([id, count], value.stock)
     }
-    return (
-        <div className={"item " + value.id }>
-            <h2>{value.title}</h2>
-            <p>${value.price}</p>
-            <img src={value.images[0]} width='250px' height='250px'/>
-            <input type="number" min='0' max={value.stock} value={count} onChange={handleInputChange} className={styles.capacity}/>
-            <button className="add-to-cart" onClick={addToCart}>Add to Cart</button>
-        </div>
-    )
+    function removeFromCart(){
+        handleCartChanges(id);
+    }
+
+        return (
+            <div className={"item " + (id)}>
+                <h2>{value.title}</h2>
+                <p>${value.price}</p>
+                <img src={value.images[0]} width='250px' height='250px'/>
+                <input type="number"
+                       min='0' 
+                       max={value.stock} 
+                       value={count} 
+                       onChange={handleInputChange} 
+                       className={styles.capacity}/>
+                {isCartItem ? 
+                    <button className="removeFromCart" onClick={removeFromCart}>Remove</button> :
+                    <button className="addToCart" onClick={addToCart} disabled={count <= 0 || value.stock === cartItems[id]?.count}>Add to Cart</button>
+                }
+            </div>
+        )
+        
 }
 
 export default Item;
