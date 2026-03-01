@@ -25,7 +25,7 @@ function Item({value, initCount, handleCartChanges, cartItems, isCartItem }){
         }
     }
     function addToCart(){
-         handleCartChanges([id, count], stock)
+         handleCartChanges([id, count])
     }
     function removeFromCart(){
         handleCartChanges(id);
@@ -49,10 +49,10 @@ function Item({value, initCount, handleCartChanges, cartItems, isCartItem }){
                        value={count} 
                        onChange={handleInputChange}
                        className={styles.capacity}/>
-                <button className="controlInput" onClick={increment} disabled={count === stock}>+</button>
+                <button className="controlInput" onClick={increment} disabled={stock <= count + cartItems[id]?.count}>+</button>
                 {isCartItem ? 
                     <button className="removeFromCart" onClick={removeFromCart}>Remove</button> :
-                    <button className="addToCart" onClick={addToCart} disabled={count <= 0 || stock === cartItems[id]?.count}>Add to Cart</button>
+                    <button className="addToCart" onClick={addToCart} disabled={count <= 0 || stock < count + cartItems[id]?.count}>Add to Cart</button>
                 }
             </div>
         )

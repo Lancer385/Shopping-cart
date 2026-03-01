@@ -10,7 +10,11 @@ function Shop(){
         const count = arr[1]
         
         setCartItems(draft => {
-            draft[id] = {count: count};
+            if (draft[id] === undefined){
+                draft[id] = {count: count};
+                return;
+            }
+            draft[id].count += count;
         })
     }
 
