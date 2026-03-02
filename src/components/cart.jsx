@@ -1,52 +1,52 @@
 import { useOutletContext } from "react-router-dom";
 import Item from "./item";
 
-function Cart(){
-    const {items, cart} = useOutletContext();
-    const [cartItems, setCartItems] = cart
+function Cart() {
+  const { items, cart } = useOutletContext();
+  const [cartItems, setCartItems] = cart;
 
-    function handleCartChanges(id){
-        setCartItems(draft => {
-            delete draft[id]
-        })
-    }
-    function handleManualChange(id, count){
-        setCartItems(draft => {
-            draft[id].count = count;
-        })
-    }
-    function handleIncrementing(id){
-        setCartItems(draft => {
-            draft[id].count = draft[id].count + 1
-        })
-    }
-    function handleDecrementing(id){
-         setCartItems(draft => {
-            draft[id].count = draft[id].count - 1
-        })
-    }
-    return (
-        !isEmpty(cartItems) &&
-        <>
-            {Object.keys(cartItems).map((key) => (
-                <Item 
-                    value = {items[key - 1]} // the cart object starts from 1 based on the id but the api structure starts from 0 so we just subtract 1
-                    key={key}
-                    initCount={cartItems[key].count}
-                    handleCartChanges= {handleCartChanges}
-                    cartItems={cartItems}
-                    isCartItem={true}
-                    handleManualChange={handleManualChange}
-                    handleIncrementing={handleIncrementing}
-                    handleDecrementing={handleDecrementing}
-                />
-            ))}
-        </> ||
-        <>Looks like there&apos;s nothing here yet</>
-    )
+  function handleCartChanges(id) {
+    setCartItems((draft) => {
+      delete draft[id];
+    });
+  }
+  function handleManualChange(id, count) {
+    setCartItems((draft) => {
+      draft[id].count = count;
+    });
+  }
+  function handleIncrementing(id) {
+    setCartItems((draft) => {
+      draft[id].count = draft[id].count + 1;
+    });
+  }
+  function handleDecrementing(id) {
+    setCartItems((draft) => {
+      draft[id].count = draft[id].count - 1;
+    });
+  }
+  return (
+    (!isEmpty(cartItems) && (
+      <>
+        {Object.keys(cartItems).map((key) => (
+          <Item
+            value={items[key - 1]} // the cart object starts from 1 based on the id but the api structure starts from 0 so we just subtract 1
+            key={key}
+            initCount={cartItems[key].count}
+            handleCartChanges={handleCartChanges}
+            cartItems={cartItems}
+            isCartItem={true}
+            handleManualChange={handleManualChange}
+            handleIncrementing={handleIncrementing}
+            handleDecrementing={handleDecrementing}
+          />
+        ))}
+      </>
+    )) || <>Looks like there&apos;s nothing here yet</>
+  );
 }
 
-export default Cart
+export default Cart;
 
 function isEmpty(obj) {
   return obj && Object.keys(obj).length === 0;

@@ -1,41 +1,41 @@
 import { useOutletContext } from "react-router-dom";
 import Item from "./item";
 
-function Shop(){
-    const {items, cart} = useOutletContext();
-    const [cartItems, setCartItems] = cart
+function Shop() {
+  const { items, cart } = useOutletContext();
+  const [cartItems, setCartItems] = cart;
 
-    function handleCartChanges(arr){
-        const id = arr[0]
-        const count = arr[1]
-        
-        setCartItems(draft => {
-            if (draft[id] === undefined){
-                draft[id] = {count: count};
-                return;
-            }
-            draft[id].count += count;
-        })
-    }
+  function handleCartChanges(arr) {
+    const id = arr[0];
+    const count = arr[1];
 
-    return (
-        items && /* if there are items, render them */
-        <>
-            {items.map((value) => (
-                <Item 
-                    value = {value}
-                    key={value.id}
-                    initCount={0}
-                    handleCartChanges= {handleCartChanges}
-                    cartItems= {cartItems}
-                    isCartItem={false}
-                />
-            ))}
-        </> || /* otherwise, show loading state if they are taking too long (items = null) */
-        <>
-            Loading...
-        </>
+    setCartItems((draft) => {
+      if (draft[id] === undefined) {
+        draft[id] = { count: count };
+        return;
+      }
+      draft[id].count += count;
+    });
+  }
+
+  return (
+    (items /* if there are items, render them */ && (
+      <>
+        {items.map((value) => (
+          <Item
+            value={value}
+            key={value.id}
+            initCount={0}
+            handleCartChanges={handleCartChanges}
+            cartItems={cartItems}
+            isCartItem={false}
+          />
+        ))}
+      </>
+    )) /* otherwise, show loading state if they are taking too long (items = null) */ || (
+      <>Loading...</>
     )
+  );
 }
 
 export default Shop;
