@@ -10,7 +10,21 @@ function Cart(){
             delete draft[id]
         })
     }
-
+    function handleManualChange(id, count){
+        setCartItems(draft => {
+            draft[id].count = count;
+        })
+    }
+    function handleIncrementing(id){
+        setCartItems(draft => {
+            draft[id].count = draft[id].count + 1
+        })
+    }
+    function handleDecrementing(id){
+         setCartItems(draft => {
+            draft[id].count = draft[id].count - 1
+        })
+    }
     return (
         !isEmpty(cartItems) &&
         <>
@@ -22,10 +36,13 @@ function Cart(){
                     handleCartChanges= {handleCartChanges}
                     cartItems={cartItems}
                     isCartItem={true}
+                    handleManualChange={handleManualChange}
+                    handleIncrementing={handleIncrementing}
+                    handleDecrementing={handleDecrementing}
                 />
             ))}
         </> ||
-        <>Looks like there's nothing here yet</>
+        <>Looks like there&apos;s nothing here yet</>
     )
 }
 

@@ -1,13 +1,25 @@
 import { useState } from "react";
+import PropTypes from 'prop-types';
 import styles from "../styles/item.module.css"
-function Item({value, initCount, handleCartChanges, cartItems, isCartItem }){
+
+function Item({ value,
+                initCount,
+                handleCartChanges, 
+                cartItems, 
+                isCartItem, 
+                handleManualChange,
+                handleIncrementing, 
+                handleDecrementing,}){
     const [count, setCount] = useState(initCount);
     const { title, price, images, stock, id } = value;
 
     function handleInputChange(e) {
         // edge case to prevent typing 0000000, it's not really problematic but it's nice to have.
-        if (e.target.value.length === 2 && e.target.value.startsWith("0")){
+        if (e.target.value.length === 3 && e.target.value.startsWith("0")){
             setCount(1); // since react won't trigger re-render since parsed zeros is just 0. we just set it to 1.
+            if(isCartItem){
+                handleManualChange(id, 1)
+            }
             return;
         }
         if (e.target.value === ''){
@@ -17,10 +29,16 @@ function Item({value, initCount, handleCartChanges, cartItems, isCartItem }){
         let input = parseInt(e.target.value)
         if (input <= stock){
             setCount(input)
+            if(isCartItem){
+                handleManualChange(id, input)
+            }
             return;
         }
         else {
             setCount(stock);
+            if(isCartItem){
+                handleManualChange(id, stock)
+            }
             return;
         }
     }
@@ -32,9 +50,18 @@ function Item({value, initCount, handleCartChanges, cartItems, isCartItem }){
     }
     function increment(){
         setCount(count + 1);
+        if(isCartItem){
+            handleIncrementing(id)
+        }
     }
     function decrement(){
         setCount(count - 1)
+         if(isCartItem){
+            handleDecrementing(id)
+            if (count <= 1){ // a tiny thing i decided t
+                removeFromCart();
+            }
+        }
     }
 
         return (
@@ -42,7 +69,10 @@ function Item({value, initCount, handleCartChanges, cartItems, isCartItem }){
                 <h2>{title}</h2>
                 <p>${price}</p>
                 <img src={images[0]} width='250px' height='250px'/>
+                {count <= 1 && isCartItem ?
+                <button className="controlInput" onClick={decrement} disabled={count === 0}>del</button> :
                 <button className="controlInput" onClick={decrement} disabled={count === 0}>-</button>
+                }
                 <input type="number"
                        min='0' 
                        max={stock} 
@@ -59,4 +89,13 @@ function Item({value, initCount, handleCartChanges, cartItems, isCartItem }){
         
 }
 
+Item.propTypes = {
+  value: PropTypes.object,
+  initCount: PropTypes.number,
+  handleCartChanges: PropTypes.func, 
+  cartItems: PropTypes.object, 
+  isCartItem: PropTypes.bool, 
+  handleIncrementing: PropTypes.func, 
+  handleDecrementing: PropTypes.func, 
+};
 export default Item;
