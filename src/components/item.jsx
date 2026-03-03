@@ -75,7 +75,7 @@ function Item({
         <button
           className="controlInput"
           onClick={decrement}
-          aria-label="Remove item"
+          aria-label="Delete item"
           disabled={count === 0}
         >
           del

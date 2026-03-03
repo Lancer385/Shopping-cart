@@ -47,7 +47,7 @@ describe("Shop Item", () => {
       />,
     );
     const addToCart = screen.getByRole("button", { name: "Add to Cart" });
-    const increment = screen.getByRole("button", { name: "+" });
+    const increment = screen.getByRole("button", { name: "Increase quantity" });
 
     await user.click(increment);
     await user.click(addToCart);
@@ -84,7 +84,7 @@ describe("Shop Item", () => {
       />,
     );
     const input = screen.getByRole("spinbutton");
-    const decrement = screen.getByRole("button", { name: "-" });
+    const decrement = screen.getByRole("button", { name: "Decrease quantity" });
     await user.click(decrement); // button should be disabled
     expect(input).toHaveValue(0);
   });
@@ -102,28 +102,12 @@ describe("Shop Item", () => {
       />,
     );
     const input = screen.getByRole("spinbutton");
-    const increment = screen.getByRole("button", { name: "+" });
+    const increment = screen.getByRole("button", { name: "Increase quantity" });
     await user.type(input, "99"); // this will auto-cap, based on our third test!
     await user.click(increment); // thus this will be disabled
     expect(input).toHaveValue(parseInt(product.stock));
   });
 
-  it("should delete itself if it exists inside cart component", async () => {
-    const user = userEvent.setup();
-    const handleCartChanges = vi.fn();
-    render(
-      <Item
-        value={product}
-        handleCartChanges={handleCartChanges} // this function is handled differently between shop and cart component
-        initCount={0}
-        cartItems={cartItems}
-        isCartItem={true} // this tells the component that it lives inside the cart
-      />,
-    );
-    const remove = screen.getByRole("button", { name: "Remove" });
-    await user.click(remove);
-    expect(handleCartChanges).toHaveBeenCalled();
-  });
   it("shouldn't add items to cart if the cart already reached the max stock of said item", async () => {
     const user = userEvent.setup();
     const handleCartChanges = vi.fn();
@@ -137,7 +121,7 @@ describe("Shop Item", () => {
       />,
     );
     const input = screen.getByRole("spinbutton");
-    const increment = screen.getByRole("button", { name: "+" });
+    const increment = screen.getByRole("button", { name: "Increase quantity" });
     const addToCart = screen.getByRole("button", { name: "Add to Cart" });
     // so the cart already has 48 items
     await user.click(increment); // should be fine to increment = 1
@@ -149,3 +133,68 @@ describe("Shop Item", () => {
     // now both increment and add to cart buttons are disabled
   });
 });
+
+
+describe("Cart Item", ()=> {
+    
+  it("should delete itself if it exists inside cart component", async () => {
+    const user = userEvent.setup();
+    const handleCartChanges = vi.fn();
+    render(
+      <Item
+        value={product}
+        handleCartChanges={handleCartChanges} // this function is handled differently between shop and cart component
+        initCount={cartItems[1].count}
+        cartItems={cartItems}
+        isCartItem={true} // this tells the item component that it lives inside the cart
+      />,
+    );
+    const remove = screen.getByRole("button", { name: "Remove item" });
+    await user.click(remove);
+    expect(handleCartChanges).toHaveBeenCalled();
+  });
+  it("should switch increment to a delete button", async () => {
+    const user = userEvent.setup();
+    const handleCartChanges = vi.fn();
+    const handleManualChange = vi.fn()
+    const handleDecrementing= vi.fn(); // the function that handles
+    render(
+        <Item
+        value={product}
+        handleCartChanges={handleCartChanges}
+        handleDecrementing={handleDecrementing}
+        handleManualChange={handleManualChange}
+        initCount={2}
+        cartItems={cartItems}
+        isCartItem={true} 
+        />,
+    );
+    const decrement = screen.getByRole("button", { name: "Decrease quantity" });
+    await user.click(decrement);
+    expect(screen.getByRole("button", {name: "Delete item"})).toBeInTheDocument()
+  });
+
+  it("should let decrement delete the item if the value of the input equal to 1", async () => {
+    const user = userEvent.setup();
+    const handleCartChanges = vi.fn();
+    const handleManualChange = vi.fn()
+    const handleDecrementing= vi.fn(); // the function that handles
+    render(
+      <Item
+        value={product}
+        handleCartChanges={handleCartChanges}
+        handleDecrementing={handleDecrementing}
+        handleManualChange={handleManualChange}
+        initCount={1}
+        cartItems={cartItems}
+        isCartItem={true} 
+      />,
+    );
+    const decrement = screen.getByRole("button", { name: "Delete item" });
+    await user.click(decrement);
+    expect(handleDecrementing).toHaveBeenCalled();
+    expect(handleCartChanges).toHaveBeenCalled();
+  });
+  
+
+})
