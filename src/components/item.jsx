@@ -60,21 +60,22 @@ function Item({
     if (isCartItem) {
       handleDecrementing(id);
       if (count <= 1) {
-        // a tiny thing i decided t
         removeFromCart();
       }
     }
   }
 
   return (
-    <div className={"item " + id}>
+    <div className="item" id={`item-${id}`}>
       <h2>{title}</h2>
       <p>${price}</p>
       <img src={images[0]} width="250px" height="250px" />
+      <label for={`quantity-${id}`}>Quantity: </label>
       {count <= 1 && isCartItem ? (
         <button
           className="controlInput"
           onClick={decrement}
+          aria-label="Remove item"
           disabled={count === 0}
         >
           del
@@ -83,12 +84,14 @@ function Item({
         <button
           className="controlInput"
           onClick={decrement}
+          aria-label="Decrease quantity"
           disabled={count === 0}
         >
           -
         </button>
       )}
       <input
+        id={`quantity-${id}`}
         type="number"
         min="0"
         max={stock}
@@ -99,12 +102,13 @@ function Item({
       <button
         className="controlInput"
         onClick={increment}
+        aria-label="Increase quantity"
         disabled={stock <= count + cartItems[id]?.count}
       >
         +
       </button>
       {isCartItem ? (
-        <button className="removeFromCart" onClick={removeFromCart}>
+        <button className="removeFromCart"  aria-label="Remove item" onClick={removeFromCart}>
           Remove
         </button>
       ) : (
@@ -128,5 +132,6 @@ Item.propTypes = {
   isCartItem: PropTypes.bool,
   handleIncrementing: PropTypes.func,
   handleDecrementing: PropTypes.func,
+  handleManualChange: PropTypes.func,
 };
 export default Item;
