@@ -1,0 +1,30 @@
+.home {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+    font-size: 20px;
+    background-color: #A295B1;
+    margin: 40px;
+    padding: 10px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 13px 11px rgba(0,0,0,0.17);
+}
+.shopLink {
+    background-color: #272838;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    color: #e4e5f0;
+    font-weight: 600    ;
+    transition: box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.shopLink:hover {
+  background-color: #464864;
+  box-shadow: 0 0 12px rgba(80, 60, 110, 0.6);
+}
+

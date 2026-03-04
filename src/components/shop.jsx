@@ -1,5 +1,6 @@
 import { useOutletContext } from "react-router-dom";
 import Item from "./item";
+import styles from "../styles/shop.module.css"
 
 function Shop() {
   const { items, cart } = useOutletContext();
@@ -8,7 +9,7 @@ function Shop() {
   function handleCartChanges(arr) {
     const id = arr[0];
     const count = arr[1];
-
+  
     setCartItems((draft) => {
       if (draft[id] === undefined) {
         draft[id] = { count: count };
@@ -19,8 +20,9 @@ function Shop() {
   }
 
   return (
+    
     (items /* if there are items, render them */ && (
-      <>
+      <main className={styles.products}>
         {items.map((value) => (
           <Item
             value={value}
@@ -31,9 +33,12 @@ function Shop() {
             isCartItem={false}
           />
         ))}
-      </>
-    )) /* otherwise, show loading state if they are taking too long (items = null) */ || (
-      <>Loading...</>
+      </main>
+    )) /* otherwise, show loading state if they are taking too long (items = null) */ 
+    || (
+      <main className={styles.loading}>
+        Loading...
+      </main>
     )
   );
 }

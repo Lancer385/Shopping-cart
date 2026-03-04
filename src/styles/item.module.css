@@ -1,10 +1,106 @@
 /* chromium, Safari*/
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
+.capacity::-webkit-outer-spin-button,
+.capacity::-webkit-inner-spin-button {
   appearance: none;
   margin: 0;
 }
+.item {
+  background-color: #CBC4D4;
+  padding: 15px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  box-shadow: 0px 0px 13px 6px rgba(0,0,0,0.17);
+}
 
-input[type="number"] {
-  appearance: textfield;
+.itemImage {
+  background-color: white;
+  border-radius: 6px;
+}
+.itemTitle {
+  align-self: flex-start;
+  font-size: 1.175rem;
+  margin-bottom: 0;
+}
+.itemPrice{
+  align-self: flex-start;
+  margin-top: 0;
+}
+
+.quantity {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.control {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+.capacity {
+  appearance: textfield; /*firefox */
+  width: 2.5rem;
+  text-align: center;
+  padding: 0.25rem;
+  border-radius: 6px;
+  border: 1px solid #3D3E52;
+  background-color: #272838;
+  color: #EDEDF0;
+  outline: none;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+
+}
+
+.capacity:focus{
+  background-color: red;
+}
+
+
+
+.controlInput {
+  padding: 0.25rem 0.6rem;
+  background-color: #272838;
+  border: none;
+  cursor: pointer;
+}
+
+.addToCart {
+  background-color: #7C3AED;
+  padding: 0.4rem 1rem;
+}
+
+.removeFromCart {
+  background-color: #7F1D1D;
+  padding: 0.4rem 1rem;
+}
+
+.addToCart, .removeFromCart, .controlInput {
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  border-radius: 6px;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+
+.controlInput:hover, .capacity:focus {
+  background-color: #1a1b26;
+  box-shadow: 0 0 10px rgba(80, 60, 110, 0.5);
+}
+
+.addToCart:hover {
+  background-color: #6D28D9;
+  box-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+}
+
+.removeFromCart:hover {
+  background-color: #6B1A1A;
+  box-shadow: 0 0 10px rgba(127, 29, 29, 0.5);
+}
+
+.addToCart:disabled:hover, .removeFromCart:disabled:hover, .controlInput:disabled:hover {
+  box-shadow: none;
 }

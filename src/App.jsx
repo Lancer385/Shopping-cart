@@ -4,7 +4,7 @@ import Footer from "./components/footer";
 import { getItems } from "./Api/fetchCart";
 import { useState, useEffect } from "react";
 import { useImmer } from "use-immer";
-
+import "./styles/App.css"
 function App() {
   const [items, setItems] = useState(null);
   const [cartItems, setCartItems] = useImmer({});

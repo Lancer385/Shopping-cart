@@ -1,6 +1,7 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 import styles from "../styles/item.module.css";
+import { Minus, Plus, Trash } from "lucide-react";
 
 function Item({
   value,
@@ -66,60 +67,65 @@ function Item({
   }
 
   return (
-    <div className="item" id={`item-${id}`}>
-      <h2>{title}</h2>
-      <p>${price}</p>
-      <img src={images[0]} width="250px" height="250px" />
-      <label for={`quantity-${id}`}>Quantity: </label>
-      {count <= 1 && isCartItem ? (
-        <button
-          className="controlInput"
-          onClick={decrement}
-          aria-label="Delete item"
-          disabled={count === 0}
-        >
-          del
-        </button>
-      ) : (
-        <button
-          className="controlInput"
-          onClick={decrement}
-          aria-label="Decrease quantity"
-          disabled={count === 0}
-        >
-          -
-        </button>
-      )}
-      <input
-        id={`quantity-${id}`}
-        type="number"
-        min="0"
-        max={stock}
-        value={count}
-        onChange={handleInputChange}
-        className={styles.capacity}
-      />
-      <button
-        className="controlInput"
-        onClick={increment}
-        aria-label="Increase quantity"
-        disabled={stock <= count + cartItems[id]?.count}
-      >
-        +
-      </button>
-      {isCartItem ? (
-        <button className="removeFromCart"  aria-label="Remove item" onClick={removeFromCart}>
-          Remove
-        </button>
-      ) : (
-        <button
-          className="addToCart"
-          onClick={addToCart}
-          disabled={count <= 0 || stock < count + cartItems[id]?.count}
-        >
-          Add to Cart
-        </button>
-      )}
+    <div className={styles.item} id={`item-${id}`}>
+      <img className={styles.itemImage} src={images[0]} width="250px" height="250px" />
+      <h2 className={styles.itemTitle}>{title}</h2>
+      <p className={styles.itemPrice}>${price}</p>
+      <div className={styles.quantity}>
+        <div className={styles.control}>
+          <label htmlFor={`quantity-${id}`}>Quantity: </label>
+          {count <= 1 && isCartItem ? (
+            <button
+              className={styles.controlInput}
+              onClick={decrement}
+              aria-label="Delete item"
+              disabled={count === 0}
+            >
+              <Trash height={14} width={14}/>
+            </button>
+          ) : (
+            <button
+              className={styles.controlInput}
+              onClick={decrement}
+              aria-label="Decrease quantity"
+              disabled={count === 0}
+            >
+              <Minus height={14} width={14}/>
+            </button>
+          )}
+          <input
+            id={`quantity-${id}`}
+            type="number"
+            min="0"
+            max={stock}
+            value={count}
+            onChange={handleInputChange}
+            className={styles.capacity}
+          />
+          <button
+            className={styles.controlInput}
+            onClick={increment}
+            aria-label="Increase quantity"
+            disabled={stock <= count + cartItems[id]?.count}
+          >
+            <Plus height={14} width={14} />
+          </button>
+        </div>
+        {isCartItem ? (
+          <button className={styles.removeFromCart}  aria-label="Remove item" onClick={removeFromCart}>
+            Remove
+          </button>
+        ) : (
+          <button
+            className={styles.addToCart}
+            onClick={addToCart}
+            disabled={count <= 0 || stock < count + cartItems[id]?.count}
+          >
+            Add to Cart
+          </button>
+        )}
+      </div>
+      <span>Stock: {stock}</span>
     </div>
   );
 }
