@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 import Styles from "../styles/header.module.css";
 import { ShoppingCart } from "lucide-react";
 
@@ -30,3 +31,8 @@ function Header({ cartItems }) {
 }
 
 export default Header;
+
+
+Header.propTypes = {
+  cartItems: PropTypes.object
+}
