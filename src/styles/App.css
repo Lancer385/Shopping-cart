@@ -20,13 +20,3 @@ main {
     flex: 1;
 }
 
-
-button:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
-
-button:disabled:hover{
-    box-shadow: none;
-    background-color: none;
-}

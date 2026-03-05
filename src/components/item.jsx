@@ -72,8 +72,9 @@ function Item({
       <h2 className={styles.itemTitle}>{title}</h2>
       <p className={styles.itemPrice}>${price}</p>
       <div className={styles.quantity}>
+        <label htmlFor={`quantity-${id}`}>Quantity</label>
         <div className={styles.control}>
-          <label htmlFor={`quantity-${id}`}>Quantity: </label>
+
           {count <= 1 && isCartItem ? (
             <button
               className={styles.controlInput}
@@ -125,7 +126,7 @@ function Item({
           </button>
         )}
       </div>
-      <span>Stock: {stock}</span>
+      <span>Stock: {cartItems[id] ? stock - cartItems[id].count : stock}</span>
     </div>
   );
 }

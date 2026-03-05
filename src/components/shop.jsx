@@ -1,6 +1,6 @@
 import { useOutletContext } from "react-router-dom";
 import Item from "./item";
-import styles from "../styles/shop.module.css"
+import styles from "../styles/shopCart.module.css"
 
 function Shop() {
   const { items, cart } = useOutletContext();

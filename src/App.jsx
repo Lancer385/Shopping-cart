@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import Header from "./components/header";
 import Footer from "./components/footer";
-import { getItems } from "./Api/fetchCart";
+import { getItems } from "./Api/fetchItems";
 import { useState, useEffect } from "react";
 import { useImmer } from "use-immer";
 import "./styles/App.css"

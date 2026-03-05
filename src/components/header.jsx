@@ -1,9 +1,18 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
-import Styles from "../styles/header.module.css";
+import styles from "../styles/header.module.css";
 import { ShoppingCart } from "lucide-react";
 
 function Header({ cartItems }) {
+   let location = useLocation()
+
+    const active =  (curr) => {
+      if(location.pathname === curr){
+        return styles.active
+      }
+      return ''
+    }
+
   const totalItems = Object.values(cartItems).reduce(
     (sum, value) => sum + value.count,
     0,
@@ -11,19 +20,19 @@ function Header({ cartItems }) {
   const cartDisplay =
     totalItems === 0 ? null : totalItems > 9 ? "9+" : `${totalItems}`;
   return (
-    <header className={Styles.header}>
-      <h1 className={Styles.heading}>Shopping Cart</h1>
-      <nav className={Styles.navigation}>
-        <Link className={Styles.navOne} to="home">
-          Home
+    <header className={styles.header}>
+      <h1 className={styles.heading}>Shopping Cart</h1>
+      <nav className={styles.navigation}>
+        <Link className={styles.navOne} to="home" >
+          <span className={active('/home')}>Home</span>
         </Link>
-        <Link className={Styles.navTwo} to="shop">
-          Shop
+        <Link className={styles.navTwo} to="shop">
+           <span className={active('/shop')}>Shop</span>
         </Link>
-        <Link className={Styles.navThree} to="cart" aria-label="Cart">
-          {" "}
-          <ShoppingCart width={32} height={32} />
-          <span className={Styles.number}>{cartDisplay}</span>
+        <Link className={styles.navThree} to="cart" aria-label="Cart">
+      
+          <ShoppingCart width={32} height={32} className={active('/cart')}/>
+          <span className={`${styles.number} ${active('/cart')}`}>{cartDisplay}</span>
         </Link>
       </nav>
     </header>

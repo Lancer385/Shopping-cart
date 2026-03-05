@@ -1,4 +1,4 @@
-async function fetchData(url) {
+async function fetchItems(url) {
   try {
     const response = await fetch(url);
     if (!response.ok) {
@@ -11,4 +11,4 @@ async function fetchData(url) {
   }
 }
 
-export const getItems = () => fetchData("https://dummyjson.com/products");
+export const getItems = () => fetchItems("https://dummyjson.com/products");

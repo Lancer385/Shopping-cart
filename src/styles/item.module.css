@@ -4,6 +4,7 @@
   appearance: none;
   margin: 0;
 }
+
 .item {
   background-color: #CBC4D4;
   padding: 15px;
@@ -11,10 +12,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 450px;
+  height: 550px;
   justify-content: space-evenly;
   box-shadow: 0px 0px 13px 6px rgba(0,0,0,0.17);
 }
+
+
 
 .itemImage {
   background-color: white;
@@ -32,6 +35,7 @@
 
 .quantity {
   display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 3px;
 }
@@ -39,47 +43,49 @@
 .control {
   display: flex;
   align-items: center;
-  gap: 3px;
+  gap: 10px;
 }
 .capacity {
-  appearance: textfield; /*firefox */
-  width: 2.5rem;
+  appearance: textfield;
+  width: 5rem;
+  height: 2.5rem;
   text-align: center;
   padding: 0.25rem;
   border-radius: 6px;
-  border: 1px solid #3D3E52;
-  background-color: #272838;
-  color: #EDEDF0;
+  border: 2px solid #272838;
   outline: none;
   transition: background-color 0.2s ease, box-shadow 0.2s ease;
-
 }
-
-.capacity:focus{
-  background-color: red;
-}
-
 
 
 .controlInput {
   padding: 0.25rem 0.6rem;
+  width: 2.5rem;
+  height:  2.5rem;
   background-color: #272838;
-  border: none;
+  border: 2px;
   cursor: pointer;
 }
 
 .addToCart {
-  background-color: #7C3AED;
-  padding: 0.4rem 1rem;
+  background-color: #4d248e;
+  border: #6D28D9 2px solid ;
+
 }
 
 .removeFromCart {
+  border: #6B1A1A 2px solid ;;
   background-color: #7F1D1D;
+
+}
+
+.addToCart, .removeFromCart {
+  font-weight: 600;
+  font-size: 1.2rem;
   padding: 0.4rem 1rem;
 }
 
 .addToCart, .removeFromCart, .controlInput {
-  border: none;
   cursor: pointer;
   color: #fff;
   border-radius: 6px;
@@ -87,8 +93,12 @@
 }
 
 
-.controlInput:hover, .capacity:focus {
-  background-color: #1a1b26;
+.capacity:focus {
+    background-color: #1a1b26;
+    color: white;
+}
+
+.controlInput:hover {
   box-shadow: 0 0 10px rgba(80, 60, 110, 0.5);
 }
 
@@ -104,4 +114,17 @@
 
 .addToCart:disabled:hover, .removeFromCart:disabled:hover, .controlInput:disabled:hover {
   box-shadow: none;
+}
+
+
+.controlInput:disabled {
+  border: #272838 2px solid;
+  background-color: #27283878;
+  cursor: not-allowed;
+}
+
+.addToCart:disabled {
+  border: #6D28D9 2px solid;
+  background-color: rgba(45, 30, 209, 0.316);
+  cursor: not-allowed;
 }
