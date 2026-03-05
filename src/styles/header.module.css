@@ -1,5 +1,4 @@
 
-/* mobile */
 
 
 /* mobile */
@@ -62,6 +61,7 @@
     left: 11px;
     bottom: 22px;
 }
+/* desktop */ 
 
 @media (width >= 784px){
     .header {
