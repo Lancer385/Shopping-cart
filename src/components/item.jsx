@@ -81,6 +81,7 @@ function Item({
               onClick={decrement}
               aria-label="Delete item"
               disabled={count === 0}
+              aria-live="polite"
             >
               <Trash height={14} width={14}/>
             </button>
