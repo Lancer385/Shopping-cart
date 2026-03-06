@@ -17,19 +17,18 @@ function Item({
   const { title, price, images, stock, id } = value;
 
   function handleInputChange(e) {
-    // edge case to prevent typing 0000000, it's not really problematic but it's nice to have.
-    if (e.target.value.length === 3 && e.target.value.startsWith("0")) {
-      setCount(1); // since react won't trigger re-render since parsed zeros is just 0. we just set it to 1.
-      if (isCartItem) {
-        handleManualChange(id, 1);
-      }
-      return;
-    }
     if (e.target.value === "") {
       setCount(e.target.value);
       return;
     }
     let input = parseInt(e.target.value);
+    if (isNaN(input)){
+      setCount(0)
+       if (isCartItem) {
+        handleManualChange(id, 0);
+      }
+      return;
+    }
     if (input <= stock) {
       setCount(input);
       if (isCartItem) {
@@ -80,8 +79,6 @@ function Item({
               className={styles.controlInput}
               onClick={decrement}
               aria-label="Delete item"
-              disabled={count === 0}
-              aria-live="polite"
             >
               <Trash height={14} width={14}/>
             </button>
@@ -97,12 +94,13 @@ function Item({
           )}
           <input
             id={`quantity-${id}`}
-            type="number"
-            min="0"
-            max={stock}
+            type="text"
+            inputMode="numeric"
+            pattern="[0-9]*"
             value={count}
             onChange={handleInputChange}
             className={styles.capacity}
+            aria-live="polite"
           />
           <button
             className={styles.controlInput}

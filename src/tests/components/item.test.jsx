@@ -66,10 +66,10 @@ describe("Shop Item", () => {
         isCartItem={false}
       />,
     );
-    const input = screen.getByRole("spinbutton");
+    const input = screen.getByRole("textbox");
 
     await user.type(input, "999"); // the input will auto-cap based on stock value.
-    expect(input).toHaveValue(parseInt(product.stock));
+    expect(input).toHaveValue(product.stock);
   });
   it("shouldn't decrement if the input value is 0", async () => {
     const user = userEvent.setup();
@@ -83,10 +83,10 @@ describe("Shop Item", () => {
         isCartItem={false}
       />,
     );
-    const input = screen.getByRole("spinbutton");
+    const input = screen.getByRole("textbox");
     const decrement = screen.getByRole("button", { name: "Decrease quantity" });
     await user.click(decrement); // button should be disabled
-    expect(input).toHaveValue(0);
+    expect(input).toHaveValue('0');
   });
 
   it("shouldn't increment if the value hit the max stock", async () => {
@@ -101,11 +101,11 @@ describe("Shop Item", () => {
         isCartItem={false}
       />,
     );
-    const input = screen.getByRole("spinbutton");
+    const input = screen.getByRole("textbox");
     const increment = screen.getByRole("button", { name: "Increase quantity" });
     await user.type(input, "99"); // this will auto-cap, based on our third test!
     await user.click(increment); // thus this will be disabled
-    expect(input).toHaveValue(parseInt(product.stock));
+    expect(input).toHaveValue(product.stock);
   });
 
   it("shouldn't add items to cart if the cart already reached the max stock of said item", async () => {
@@ -120,14 +120,14 @@ describe("Shop Item", () => {
         isCartItem={false}
       />,
     );
-    const input = screen.getByRole("spinbutton");
+    const input = screen.getByRole("textbox");
     const increment = screen.getByRole("button", { name: "Increase quantity" });
     const addToCart = screen.getByRole("button", { name: "Add to Cart" });
     // so the cart already has 48 items
     await user.click(increment); // should be fine to increment = 1
     await user.click(increment); // and again = 2
     await user.click(increment); // shouldn't be called here since the max stock is 50
-    expect(input).toHaveValue(2);
+    expect(input).toHaveValue('2');
     await user.click(addToCart);
     expect(handleCartChanges).toBeCalled();
     // now both increment and add to cart buttons are disabled

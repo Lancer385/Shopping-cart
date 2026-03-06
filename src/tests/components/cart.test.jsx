@@ -69,9 +69,9 @@ describe("cart", () => {
       3: { count: 15 },
     };
     render(<RouterProvider router={router} />);
-    const counts = screen.queryAllByRole("spinbutton"); // the quantity of each item is shown in the input of each of them upon opening the cart
-    expect(counts[0]).toHaveValue(5);
-    expect(counts[1]).toHaveValue(2);
-    expect(counts[2]).toHaveValue(15);
+    const counts = screen.queryAllByRole("textbox"); // the quantity of each item is shown in the input of each of them upon opening the cart
+    expect(counts[0]).toHaveValue('5');
+    expect(counts[1]).toHaveValue('2');
+    expect(counts[2]).toHaveValue('15');
   });
 });
