@@ -106,7 +106,7 @@ function Item({
             className={styles.controlInput}
             onClick={increment}
             aria-label="Increase quantity"
-            disabled={stock <= count + cartItems[id]?.count}
+            disabled={(stock <= count) && isCartItem || stock <= count + cartItems[id]?.count && !isCartItem}
           >
             <Plus height={14} width={14} />
           </button>
